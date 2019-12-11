@@ -1,7 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2019121000; // Versión actual en formato fecha (YYYYMMDDXX) XX son digitos de versión.
+$plugin->version   = 2019121002; // Versión actual en formato fecha (YYYYMMDDXX) XX son digitos de versión.
 $plugin->requires  = 2016120502; // Versión de moodle requerida [Se puede obtener del fichero version.php en la raiz].
 $plugin->cron      = 0;
 $plugin->component = 'mod_ads'; // contexto_nombrepluggin (directorio_nombrecarpeta) [El fichero en /lang/en/ debe llevar el mismo nombre].
