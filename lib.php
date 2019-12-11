@@ -4,4 +4,4 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/mod/ads/locallib.php');
+// require_once($CFG->dirroot . '/mod/ads/locallib.php');
