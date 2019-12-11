@@ -1,0 +1,7 @@
+﻿/* Estas reglas css sobrescriben al resto y al guardarse en caché podrian dañar otras paginas,
+procura crear las reglas con prefijos y definir contenedores para afectar solo desde ahí hacia dentro. */
+
+.card {
+  background: red !important;
+  background-color: red !important;
+}
