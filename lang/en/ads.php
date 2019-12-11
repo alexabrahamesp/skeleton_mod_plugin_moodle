@@ -6,3 +6,4 @@ $string['modulenameplural'] = 'Certificados Con Firma Digital';
 $string['certificate_title'] = 'Titulo del certificado';
 $string['certificate_motive'] = 'Motivo del certificado';
 $string['university_name'] = 'Nombre de la universidad';
+$string['certificate_entities_group'] = 'Definir entidades certificadoras';

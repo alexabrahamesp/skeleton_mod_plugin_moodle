@@ -11,14 +11,15 @@ class mod_ads_mod_form extends moodleform_mod {
             'certificate_title' => get_string('certificate_title', 'ads'),
             'certificate_motive' => get_string('certificate_motive', 'ads'),
             'university_name' => get_string('university_name', 'ads'),
+            'entities_group' => get_string('certificate_entities_group', 'ads'),
         ];
 
         $mform =& $this->_form;
-        
+                                                 
         $mform->addElement('text', 'certificate_title', $strings['certificate_title'], array('size'=>'64'));
         $mform->setType('certificate_title', PARAM_TEXT);
         $mform->addRule('certificate_title', null, 'required', null);
-
+         
         $mform->addElement('text', 'certificate_motive', $strings['certificate_motive'], array('size'=>'64'));
         $mform->setType('certificate_motive', PARAM_TEXT);
         $mform->addRule('certificate_motive', null, 'required', null);
