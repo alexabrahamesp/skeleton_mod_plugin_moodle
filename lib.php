@@ -11,8 +11,10 @@ function dd($var){
 }
 
 function dump($var){
+
     print_object($var);
 }
+
 
 // function ads_supports($feature){
 //     dump($feature);
@@ -20,8 +22,27 @@ function dump($var){
 // }
 
 function ads_add_instance($ads) {
-    dump($ads);
-    dd("ads_add_instance");
+    require_once(__DIR__.'/locallib.php');
+   
+    global $DB;
+    $data = new \stdClass();
+    $data->name = $ads->certificate_title;
+    if($ads->add_description == 1){
+        $data->description = $ads->certificate_description;
+    }
+    if($ads->add_university == 1){
+        $data->institution = $ads->university_name;
+    }
+    $data->course = $ads->course;
+    $data->addcoursename = $ads->add_course_name;
+    $data->advancedsignature = $ads->advanced_signature;
+    $size =  document_size($ads->document_position,$ads->document_format);
+    $data->width =$size['width'];
+    $data->height = $size['height'];
+    die(print_object($data));
+    $data->id = $DB->insert_record('ads', $data);
+    
+    return $data->id;
 }
 
 // function ads_update_instance($ads){
@@ -55,3 +76,4 @@ function ads_add_instance($ads) {
 //     dump($ads);
 //     dd("ads_update_grades"); 
 // }
+

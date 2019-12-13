@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/ads/db" VERSION="2019121000" COMMENT="XMLDB file for Moodle mod/ads"
+<XMLDB PATH="mod/ads/db" VERSION="20191211" COMMENT="XMLDB file for Moodle mod/ads"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
-  <TABLES>
+  <TABLES> 
     <TABLE NAME="ads" COMMENT="Defines adss">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
-        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
-        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
-        <FIELD NAME="intro" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" />
-        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="addcoursename" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="1000" NOTNULL="true" SEQUENCE="false" />
+        <FIELD NAME="width" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="height" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="institution" TYPE="char" LENGTH="1000" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="advancedsignature" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>       
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for ads"/>
@@ -20,15 +24,60 @@
     </TABLE>
     <TABLE NAME="ads_issues" COMMENT="Info about issued adss">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" />
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
-        <FIELD NAME="adsid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="adsid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for ads_issues" />
-        <KEY NAME="ads" TYPE="foreign" FIELDS="adsid" REFTABLE="ads" REFFIELDS="id" />
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for ads_issues"/>
+        <KEY NAME="ads" TYPE="foreign" FIELDS="adsid" REFTABLE="ads" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
+    <TABLE NAME="ads_files" COMMENT="files upload in social course plugin">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+          <FIELD NAME="ads_adsid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ads_userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ads_contextid" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ads_typeimage" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ads_filename" TYPE="char" LENGTH="1000" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ads_mimetype" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ads_timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ads_timedeleted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="ads_adsid" TYPE="foreign" FIELDS="ads_adsid" REFTABLE="ads" REFFIELDS="id"/>
+        <KEY NAME="ads_userid" TYPE="foreign" FIELDS="ads_userid" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="sc_timecreated" UNIQUE="false" FIELDS="sc_timecreated" HINTS="sctimecreated"/>
+        <INDEX NAME="sc_timedeleted" UNIQUE="false" FIELDS="sc_timedeleted" HINTS="sctimedeleted"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="ads_user_certification" COMMENT="files upload in social course plugin">
+        <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+            <FIELD NAME="ads_adsid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="ads_userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="ads_contextid" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="ads_filename" TYPE="char" LENGTH="1000" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="ads_typefile" TYPE="char" LENGTH="1000" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="ads_advancesignature" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="ads_timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="ads_timedeleted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        </FIELDS>
+        <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+          <KEY NAME="ads_adsid" TYPE="foreign" FIELDS="ads_adsid" REFTABLE="ads" REFFIELDS="id"/>
+          <KEY NAME="ads_userid" TYPE="foreign" FIELDS="ads_userid" REFTABLE="user" REFFIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+          <INDEX NAME="sc_timecreated" UNIQUE="false" FIELDS="sc_timecreated" HINTS="sctimecreated"/>
+          <INDEX NAME="sc_timedeleted" UNIQUE="false" FIELDS="sc_timedeleted" HINTS="sctimedeleted"/>
+        </INDEXES>
+      </TABLE>
   </TABLES>
-</XMLDB>
+</XMLDB> 
